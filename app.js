@@ -1,27 +1,23 @@
-const express = require('express')
-const app = express()
-const session = require('express-session')
+const express = require('express');
+const session = require('express-session');
+const router = require('./routes/routes');
+const hashedSecret = require('./crypto/config');
 
-const router = require('./routes/routes')
-const hashedSecret = require('./crypto/config')
-
+const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(
-    session({
-      secret: hashedSecret, //secret: process.env.SESSION_SECRET || 'mi_secreto_super_seguro'
-      resave: false,
-      saveUninitialized: true,
-      cookie: { secure: false }, 
-    })
-  );
+app.use(session({
+  secret: hashedSecret,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false },
+}));
 
-app.use('/', router)
+app.use('/', router);
 
-const PORT = 3000
-
+const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`Server en puerto: http://localhost:${PORT}`)
-})
+  console.log(`Servidor escuchando en: http://localhost:${PORT}`);
+});

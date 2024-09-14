@@ -10,7 +10,7 @@ function verifyToken(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, hashedSecret);
-    req.user = decoded.id; // Guardar el id del usuario en req.user
+    req.user = decoded.id;
     next();
   } catch (error) {
     return res.status(401).json({ message: 'Token inválido' });
